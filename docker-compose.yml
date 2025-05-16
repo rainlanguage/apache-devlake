@@ -63,7 +63,7 @@
       - ./.env
     environment:
       LOGGING_DIR: /app/logs
-      TZ: ${TZ}
+      TZ: UTC
       ENCRYPTION_SECRET: ${ENCRYPTION_SECRET}
     depends_on:
       - mysql
