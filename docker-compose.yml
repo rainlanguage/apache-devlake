@@ -23,18 +23,17 @@ services:
     ports:
       - 3306:3306
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: lake
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_USER: merico
+      MYSQL_PASSWORD: merico
       TZ: UTC
-      ENCRYPTION_SECRET: ${ENCRYPTION_SECRET}
     command: --character-set-server=utf8mb4
       --collation-server=utf8mb4_bin
       --skip-log-bin
 
   grafana:
-    image: devlake.docker.scarf.sh/apache/devlake-dashboard:v1.0.1   
+    image: devlake.docker.scarf.sh/apache/devlake-dashboard:v1.0.0   
     ports:
       - 3002:3000
     volumes:
@@ -44,16 +43,15 @@ services:
       GF_USERS_DEFAULT_THEME: "light"
       MYSQL_URL: mysql:3306
       MYSQL_DATABASE: lake
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_USER: merico
+      MYSQL_PASSWORD: merico
       TZ: UTC
-      ENCRYPTION_SECRET: ${ENCRYPTION_SECRET}
     restart: always
     depends_on:
       - mysql
 
   devlake:
-    image: devlake.docker.scarf.sh/apache/devlake:v1.0.1   
+    image: devlake.docker.scarf.sh/apache/devlake:v1.0.0   
     ports:
       - 8080:8080
     restart: always
@@ -64,12 +62,11 @@ services:
     environment:
       LOGGING_DIR: /app/logs
       TZ: UTC
-      ENCRYPTION_SECRET: ${ENCRYPTION_SECRET}
     depends_on:
       - mysql
 
   config-ui:
-    image: devlake.docker.scarf.sh/apache/devlake-config-ui:v1.0.1   
+    image: devlake.docker.scarf.sh/apache/devlake-config-ui:v1.0.0   
     ports:
       - 4000:4000
     env_file:
@@ -78,9 +75,8 @@ services:
       DEVLAKE_ENDPOINT: devlake:8080
       GRAFANA_ENDPOINT: grafana:3000
       TZ: UTC
-      ENCRYPTION_SECRET: ${ENCRYPTION_SECRET}
-      ADMIN_USER: ${ADMIN_USER}
-      ADMIN_PASS: ${ADMIN_PASS}
+      #ADMIN_USER: devlake
+      #ADMIN_PASS: merico
     depends_on:
       - devlake
 
